@@ -1,7 +1,7 @@
 module waterworld {
     requires hanyaeger;
 
-    exports com.github.hanyaeger.tutorial;
+    exports com.github.speezinvaders;
 
     opens audio;
     opens backgrounds;
