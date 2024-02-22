@@ -3,7 +3,7 @@ module waterworld {
 
     exports com.github.speezinvaders;
 
-    opens audio;
+    //opens audio;
     opens backgrounds;
-    opens sprites;
+    //opens sprites;
 }
