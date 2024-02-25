@@ -9,12 +9,12 @@ import com.github.speezinvaders.BulletSpawner;
 import javafx.scene.paint.Color;
 public class GunLoop extends DynamicRectangleEntity implements UpdateExposer {
 
-    private final SpaceShip spaceShip;
+    private final GunTarget gunTarget;
     private final BulletSpawner bulletSpawner;
 
-    public GunLoop(final Coordinate2D initialPosition, final SpaceShip spaceShip, final BulletSpawner bulletSpawner) {
+    public GunLoop(final Coordinate2D initialPosition, final GunTarget gunTarget, final BulletSpawner bulletSpawner) {
         super(initialPosition);
-        this.spaceShip = spaceShip;
+        this.gunTarget = gunTarget;
         this.bulletSpawner = bulletSpawner;
         setAnchorPoint(AnchorPoint.CENTER_CENTER);
         setFill(Color.BLUE);
@@ -24,10 +24,8 @@ public class GunLoop extends DynamicRectangleEntity implements UpdateExposer {
 
     @Override
     public void explicitUpdate(final long timestamp) {
-        var angle = angleTo(spaceShip);
+        var angle = angleTo(gunTarget);
         bulletSpawner.setDirection(angle);
         setRotate(angle);
     }
-
-
 }
