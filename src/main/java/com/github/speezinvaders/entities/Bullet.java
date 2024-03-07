@@ -26,7 +26,7 @@ public class Bullet extends DynamicSpriteEntity implements SceneBorderCrossingWa
         setAnchorPoint(AnchorPoint.CENTER_CENTER);
         setMotion(10, direction);
 
-        new SoundClip("laser.mp3").play();
+        new SoundClip("shoot.wav").play();
     }
 
     @Override

@@ -5,32 +5,52 @@ import com.github.hanyaeger.api.entities.Collided;
 import com.github.hanyaeger.api.entities.Collider;
 import com.github.hanyaeger.api.entities.SceneBorderTouchingWatcher;
 import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
+import com.github.hanyaeger.api.media.SoundClip;
 import com.github.hanyaeger.api.scenes.SceneBorder;
+import com.github.speezinvaders.Speezinvaderz;
 import com.github.speezinvaders.explosion.ExplosionAdder;
+import com.github.speezinvaders.scenes.GameLevel;
 
 import java.util.List;
 
 public abstract class Invader extends DynamicSpriteEntity implements SceneBorderTouchingWatcher, Collided {
 
+    private Speezinvaderz game;
     private ExplosionAdder explosionAdder;
-    public Invader(String resource, Coordinate2D initialLocation, final ExplosionAdder explosionAdder) {
+    private GameLevel gameLevel;
+
+    public Invader(String resource, Coordinate2D initialLocation, final ExplosionAdder explosionAdder, GameLevel gameLevel, Speezinvaderz game) {
         super(resource, initialLocation);
         this.explosionAdder = explosionAdder;
+        this.gameLevel = gameLevel;
+        this.game = game;
     }
+
     @Override
     public void onCollision(List<Collider> collidingObject) {
         remove();
         explode();
-    }
-    private void explode() {
-            explosionAdder.addExplosion(getAnchorLocation(), getSpeed(), getDirection());
-    }
-    @Override
-    public void notifyBoundaryTouching(final SceneBorder border) {
-        changeDirection(180);
+        gameLevel.getScoreBoard().increaseScore(getScoreValue());
     }
 
-    // Add common behavior for invaders here
-    // For example, movement logic, which can be overridden by subclasses if needed
+    private void explode() {
+        explosionAdder.addExplosion(getAnchorLocation(), getSpeed(), getDirection());
+    }
+
+    public void attack() {
+
+    }
+
+    @Override
+    public void notifyBoundaryTouching(final SceneBorder border) {
+        game.setActiveScene(1);
+    }
+
+    public void makeNoise() {
+        //new SoundClip("laser.mp3").play();
+    }
+
+    public abstract int getScoreValue();
+
 
 }

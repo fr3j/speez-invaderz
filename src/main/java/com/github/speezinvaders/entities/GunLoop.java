@@ -28,4 +28,5 @@ public class GunLoop extends DynamicRectangleEntity implements UpdateExposer {
         bulletSpawner.setDirection(angle);
         setRotate(angle);
     }
+
 }

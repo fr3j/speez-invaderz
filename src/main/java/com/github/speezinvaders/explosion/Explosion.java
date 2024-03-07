@@ -16,10 +16,10 @@ public class Explosion extends DynamicSpriteEntity implements TimerContainer {
     }
 
     public Explosion(final Coordinate2D initialLocation, final double speed, final double direction) {
-        super("explosion.png", initialLocation, new Size(90, 90), 1, 17);
-        setAnchorPoint(AnchorPoint.CENTER_CENTER);
+        super("explosion.png", initialLocation, new Size(60, 60), 1, 8);
+        setAnchorPoint(AnchorPoint.TOP_LEFT);
         setMotion(speed, direction);
-        new SoundClip("boom.mp3").play();
+        new SoundClip("invaderkilled.wav").play();
     }
 
     public void updateFrame() {
