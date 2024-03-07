@@ -46,9 +46,7 @@ public abstract class Invader extends DynamicSpriteEntity implements SceneBorder
         game.setActiveScene(1);
     }
 
-    public void makeNoise() {
-        //new SoundClip("laser.mp3").play();
-    }
+    public abstract void makeNoise();
 
     public abstract int getScoreValue();
 
