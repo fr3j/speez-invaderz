@@ -11,7 +11,7 @@ import java.util.Random;
 public class BulletSpawner extends EntitySpawner {
 
     private final Coordinate2D location;
-    private ExplosionAdder explosionAdder;
+    private final ExplosionAdder explosionAdder;
     private double direction = Direction.UP.getValue();
 
     private double requestedHue = 0D;
@@ -25,13 +25,10 @@ public class BulletSpawner extends EntitySpawner {
 
     @Override
     protected void spawnEntities() {
-        // We use a rondom boolean value to decide if we spawn a new rocket.
         if (new Random().nextBoolean()) {
             var newBall = new Bullet(location, direction, explosionAdder);
             newBall.setHue(requestedHue);
             newBall.setSaturation(requestedSaturation);
-            // Set the viewOrder to a value higher that the default to ensure the rockets appear from behind
-            // the rocket launcher.
             newBall.setViewOrder(42);
             spawn(newBall);
         }
@@ -41,11 +38,5 @@ public class BulletSpawner extends EntitySpawner {
         this.direction = direction;
     }
 
-    public void setHue(double definedHue) {
-        this.requestedHue = definedHue;
-    }
 
-    public void setSaturation(double definedSaturation) {
-        requestedSaturation = definedSaturation;
-    }
 }
