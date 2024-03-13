@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class BulletSpawner extends EntitySpawner {
 
-    private final Coordinate2D location;
+    private Coordinate2D location;
     private final ExplosionAdder explosionAdder;
     private double direction = Direction.UP.getValue();
 
@@ -32,6 +32,10 @@ public class BulletSpawner extends EntitySpawner {
             newBall.setViewOrder(42);
             spawn(newBall);
         }
+    }
+
+    public void setLocation(final Coordinate2D location) {
+        this.location = location;
     }
 
     public void setDirection(final double direction) {
