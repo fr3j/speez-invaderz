@@ -39,24 +39,10 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
 
     @Override
     public void setupEntities() {
-//        var spaceShip = new GunTarget(new Coordinate2D(getWidth() / 2, getHeight() / 2));
-//        spaceShip.setAnchorPoint(AnchorPoint.CENTER_CENTER);
-//        addEntity(spaceShip);
-
-        //addAntiAircraftGun(spaceShip);
         this.scoreBoard = new ScoreDisplay(new Coordinate2D(getWidth() / 2, 0));
         addEntity(scoreBoard);
-        //startNewWave();
         var player = new Player(new Coordinate2D(getWidth() / 2, getHeight()), bulletSpawner);
         addEntity(player);
-    }
-
-
-
-    private void addAntiAircraftGun(final GunTarget gunTarget) {
-//        var gunBase = new GunBase(new Coordinate2D(getWidth() / 2, getHeight()));
-//        addEntity(gunBase);
-
     }
 
     @Override
