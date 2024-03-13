@@ -4,6 +4,7 @@ import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.UpdateExposer;
 import com.github.hanyaeger.api.entities.impl.DynamicRectangleEntity;
+import com.github.hanyaeger.api.entities.impl.DynamicSpriteEntity;
 import com.github.hanyaeger.api.userinput.KeyListener;
 import com.github.speezinvaders.BulletSpawner;
 import javafx.scene.input.KeyCode;
@@ -11,16 +12,13 @@ import javafx.scene.paint.Color;
 
 import java.util.Set;
 
-public class Player extends DynamicRectangleEntity implements UpdateExposer, KeyListener {
+public class Player extends DynamicSpriteEntity implements UpdateExposer, KeyListener {
     private final BulletSpawner bulletSpawner;
 
     public Player(final Coordinate2D initialPosition, final BulletSpawner bulletSpawner) {
-        super(initialPosition);
+        super("cannon.png" ,initialPosition);
         this.bulletSpawner = bulletSpawner;
         setAnchorPoint(AnchorPoint.CENTER_CENTER);
-        setFill(Color.BLUE);
-        setWidth(15);
-        setHeight(15);
     }
 
     @Override
