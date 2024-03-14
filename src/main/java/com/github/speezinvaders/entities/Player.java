@@ -13,11 +13,14 @@ import java.util.Set;
 public class Player extends DynamicSpriteEntity implements UpdateExposer, KeyListener {
     private final BulletSpawner bulletSpawner;
 
+
     public Player(final Coordinate2D initialPosition, final BulletSpawner bulletSpawner) {
         super("cannon.png" ,initialPosition);
         this.bulletSpawner = bulletSpawner;
         setAnchorPoint(AnchorPoint.CENTER_CENTER);
     }
+
+
 
     @Override
     public void explicitUpdate(final long timestamp) {
@@ -35,5 +38,6 @@ public class Player extends DynamicSpriteEntity implements UpdateExposer, KeyLis
             setSpeed(0);
         }
     }
+
 
 }
