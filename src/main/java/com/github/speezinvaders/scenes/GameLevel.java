@@ -19,6 +19,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
     private BulletSpawner bulletSpawner;
     private EntitySpawner invaderSpawner;
     private ScoreDisplay scoreBoard;
+    private LiveDisplay liveDisplay;
 
     private Speezinvaderz speezinvaderz;
 
@@ -39,10 +40,12 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
 
     @Override
     public void setupEntities() {
-        this.scoreBoard = new ScoreDisplay(new Coordinate2D(getWidth() / 2, 0));
+        this.scoreBoard = new ScoreDisplay(new Coordinate2D(0, 0));
         addEntity(scoreBoard);
-        var player = new Player(new Coordinate2D(getWidth() / 2, getHeight()-50), bulletSpawner);
+        var player = new Player(new Coordinate2D(getWidth() / 2, getHeight()-30), bulletSpawner);
         addEntity(player);
+        this.liveDisplay = new LiveDisplay(new Coordinate2D(getWidth() - 100, 0), lives);
+        addEntity(liveDisplay);
     }
 
     @Override
