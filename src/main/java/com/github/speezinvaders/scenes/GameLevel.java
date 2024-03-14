@@ -22,8 +22,8 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
 
     private Speezinvaderz speezinvaderz;
 
-    private Set<Invader> currentWave = new HashSet<>();
-    private final double downwardSpeed = 0.25;
+    private int lives = 3;
+
 
     public GameLevel(Speezinvaderz speezinvaderz) {
         this.speezinvaderz = speezinvaderz;
@@ -41,7 +41,7 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
     public void setupEntities() {
         this.scoreBoard = new ScoreDisplay(new Coordinate2D(getWidth() / 2, 0));
         addEntity(scoreBoard);
-        var player = new Player(new Coordinate2D(getWidth() / 2, getHeight()), bulletSpawner);
+        var player = new Player(new Coordinate2D(getWidth() / 2, getHeight()-50), bulletSpawner);
         addEntity(player);
     }
 
@@ -58,5 +58,13 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
     public ScoreDisplay getScoreBoard(){
         return this.scoreBoard;
     }
+
+    public void loseLife() {
+        lives--;
+        if (lives <= 0) {
+            speezinvaderz.setActiveScene(1);
+        }
+    }
+
 
 }

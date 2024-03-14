@@ -18,7 +18,7 @@ public class StandardInvader extends Invader {
         Random rand = new Random();
 
         if (rand.nextInt(10) == 0) {
-            new SoundClip("standardspaceinvadersound.m4a").play();
+            new SoundClip("spaceinvadersound.wav").play();
         }
     }
 

@@ -43,7 +43,8 @@ public abstract class Invader extends DynamicSpriteEntity implements SceneBorder
 
     @Override
     public void notifyBoundaryTouching(final SceneBorder border) {
-        game.setActiveScene(1);
+        remove();
+        gameLevel.loseLife();
     }
 
     public abstract void makeNoise();
