@@ -1,6 +1,5 @@
 package com.github.speezinvaders.scenes;
 
-import com.github.hanyaeger.api.AnchorPoint;
 import com.github.hanyaeger.api.Coordinate2D;
 import com.github.hanyaeger.api.EntitySpawnerContainer;
 import com.github.hanyaeger.api.entities.EntitySpawner;
@@ -8,12 +7,14 @@ import com.github.hanyaeger.api.scenes.DynamicScene;
 import com.github.speezinvaders.BulletSpawner;
 import com.github.speezinvaders.InvaderSpawner;
 import com.github.speezinvaders.Speezinvaderz;
-import com.github.speezinvaders.entities.*;
+import com.github.speezinvaders.entities.LaserPowerUpIndicator;
+import com.github.speezinvaders.entities.LiveDisplay;
+import com.github.speezinvaders.entities.Player;
+import com.github.speezinvaders.entities.ScoreDisplay;
 import com.github.speezinvaders.explosion.Explosion;
 import com.github.speezinvaders.explosion.ExplosionAdder;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Random;
 
 public class GameLevel extends DynamicScene implements EntitySpawnerContainer, ExplosionAdder {
     private BulletSpawner bulletSpawner;
@@ -22,6 +23,8 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
     private LiveDisplay liveDisplay;
 
     private Speezinvaderz speezinvaderz;
+
+    private LaserPowerUpIndicator laserIndicator;
 
     private int lives = 3;
 
@@ -46,6 +49,8 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
         addEntity(player);
         this.liveDisplay = new LiveDisplay(new Coordinate2D(getWidth() - 100, 0), lives);
         addEntity(liveDisplay);
+        laserIndicator = new LaserPowerUpIndicator(new Coordinate2D(400, 100)); // Adjust position as needed
+        addEntity(laserIndicator);
     }
 
     @Override
@@ -63,11 +68,30 @@ public class GameLevel extends DynamicScene implements EntitySpawnerContainer, E
     }
 
     public void loseLife() {
+        liveDisplay.decreaseLife(1);
         lives--;
         if (lives <= 0) {
             speezinvaderz.setActiveScene(1);
         }
     }
+    public void activateLaserPowerUp() {
+
+        if (new Random().nextDouble() < 0.1) {
+            bulletSpawner.setLaserActive(true);
+            laserIndicator.activate();
+
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            bulletSpawner.setLaserActive(false);
+                        }
+                    },
+                    5000
+            );
+        }
+    }
+
 
 
 }

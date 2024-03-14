@@ -8,7 +8,7 @@ import com.github.speezinvaders.explosion.ExplosionAdder;
 
 import java.util.Random;
 
-public class BulletSpawner extends EntitySpawner {
+public class BulletSpawner extends EntitySpawner{
 
     private Coordinate2D location;
     private final ExplosionAdder explosionAdder;
@@ -16,6 +16,8 @@ public class BulletSpawner extends EntitySpawner {
 
     private double requestedHue = 0D;
     private double requestedSaturation = 0D;
+
+    private boolean laserActive = false;
 
     public BulletSpawner(final Coordinate2D location, final ExplosionAdder explosionAdder) {
         super(500);
@@ -25,12 +27,19 @@ public class BulletSpawner extends EntitySpawner {
 
     @Override
     protected void spawnEntities() {
+        if (laserActive) {
+            var newBall = new Bullet(location, direction, explosionAdder);
+            newBall.setHue(requestedHue);
+            newBall.setSaturation(requestedSaturation);
+            newBall.setViewOrder(42);
+            spawn(newBall);        } else {
         if (new Random().nextBoolean()) {
             var newBall = new Bullet(location, direction, explosionAdder);
             newBall.setHue(requestedHue);
             newBall.setSaturation(requestedSaturation);
             newBall.setViewOrder(42);
             spawn(newBall);
+        }
         }
     }
 
@@ -41,6 +50,10 @@ public class BulletSpawner extends EntitySpawner {
     public void setDirection(final double direction) {
         this.direction = direction;
     }
+    public void setLaserActive(boolean laserActive) {
+        this.laserActive = laserActive;
+    }
+
 
 
 }

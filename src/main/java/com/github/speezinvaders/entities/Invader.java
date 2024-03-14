@@ -31,6 +31,7 @@ public abstract class Invader extends DynamicSpriteEntity implements SceneBorder
         remove();
         explode();
         gameLevel.getScoreBoard().increaseScore(getScoreValue());
+        gameLevel.activateLaserPowerUp();
     }
 
     private void explode() {
@@ -45,6 +46,7 @@ public abstract class Invader extends DynamicSpriteEntity implements SceneBorder
     public void notifyBoundaryTouching(final SceneBorder border) {
         remove();
         gameLevel.loseLife();
+
     }
 
     public abstract void makeNoise();
