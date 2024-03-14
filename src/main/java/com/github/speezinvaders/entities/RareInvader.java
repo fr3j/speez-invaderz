@@ -6,9 +6,9 @@ import com.github.speezinvaders.Speezinvaderz;
 import com.github.speezinvaders.explosion.ExplosionAdder;
 import com.github.speezinvaders.scenes.GameLevel;
 
-public class MothershipInvader extends Invader{
-    public MothershipInvader(String resource, Coordinate2D initialLocation, ExplosionAdder explosionAdder, GameLevel gameLevel, Speezinvaderz game) {
-        super(resource, initialLocation, explosionAdder, gameLevel, game);
+public class RareInvader extends Invader{
+    public RareInvader(Coordinate2D initialLocation, ExplosionAdder explosionAdder, GameLevel gameLevel, Speezinvaderz game) {
+        super("otherspaceinvader.png", initialLocation, explosionAdder, gameLevel, game);
     }
 
     @Override

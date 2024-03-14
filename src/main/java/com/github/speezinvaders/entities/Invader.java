@@ -39,7 +39,7 @@ public abstract class Invader extends DynamicSpriteEntity implements SceneBorder
     }
 
     public void attack() {
-
+        // shoot mechanic hier
     }
 
     @Override
