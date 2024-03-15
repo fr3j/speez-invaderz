@@ -147,6 +147,20 @@ BulletSpawner --|> EntitySpawner
 InvaderSpawner --|> EntitySpawner
 Speezinvaderz --|> YaegerGame
 
+Bullet "1" -right- "1" BulletTimer : contains
+Bullet "*" -down- "1" ExplosionAdder : uses >
+GameLevel "1" -left- "*" Bullet : contains
+GameLevel "1" -left- "*" Invader : contains
+Player "1" -left- "1" BulletSpawner : uses
+ExplosionAdder "1" -up- "*" Explosion : creates
+Invader "1" -- "1..*" Collider : collides with
+InvaderSpawner "1" -right- "*" Invader : spawns
+GameLevel "1" -- "1" BulletSpawner : contains
+GameLevel "1" -- "1" InvaderSpawner : contains
+GameLevel "1" -- "1" ScoreDisplay : contains
+GameLevel "1" -- "1" LiveDisplay : contains
+GameLevel "1" -- "1" LaserPowerUpIndicator : contains
+
 Bullet ..> ExplosionAdder : uses
 BulletTimer ..> Bullet : uses
 Invader ..> ExplosionAdder : uses
