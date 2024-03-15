@@ -1,0 +1,163 @@
+@startuml
+!theme plain
+
+class Bullet {
+    -explosionAdder: ExplosionAdder
+    +Bullet(location: Coordinate2D, direction: double, explosionAdder: ExplosionAdder)
+    +notifyBoundaryCrossing(border: SceneBorder)
+    +explode()
+    +setupTimers()
+    +onCollision(collidingObject: List<Collider>)
+}
+
+class BulletTimer {
+    -delta: int
+    -bullet: Bullet
+    +BulletTimer(bullet: Bullet)
+    +onAnimationUpdate(timestamp: long)
+}
+
+class GameOverText {
+    +GameOverText(initialLocation: Coordinate2D)
+}
+
+abstract class Invader {
+    -explosionAdder: ExplosionAdder
+    -gameLevel: GameLevel
+    -game: Speezinvaderz
+    +Invader(resource: String, initialLocation: Coordinate2D, explosionAdder: ExplosionAdder, gameLevel: GameLevel, game: Speezinvaderz)
+    +onCollision(collidingObject: List<Collider>)
+    +notifyBoundaryTouching(border: SceneBorder)
+    +attack()
+    {abstract} +makeNoise()
+    {abstract} +getScoreValue(): int
+}
+
+class RareInvader {
+    +RareInvader(initialLocation: Coordinate2D, explosionAdder: ExplosionAdder, gameLevel: GameLevel, game: Speezinvaderz)
+    +makeNoise()
+    +getScoreValue(): int
+}
+
+class StandardInvader {
+    +StandardInvader(initialLocation: Coordinate2D, explosionAdder: ExplosionAdder, gameLevel: GameLevel, game: Speezinvaderz)
+    +makeNoise()
+    +getScoreValue(): int
+}
+
+class LaserPowerUpIndicator {
+    -fadeTimeline: Timeline
+    +LaserPowerUpIndicator(initialPosition: Coordinate2D)
+    +activate()
+}
+
+class LiveDisplay {
+    -lives: int
+    +LiveDisplay(initialLocation: Coordinate2D, lives: int)
+    +decreaseLife(lives: int)
+}
+
+class Player {
+    -bulletSpawner: BulletSpawner
+    +Player(initialPosition: Coordinate2D, bulletSpawner: BulletSpawner)
+    +onPressedKeysChange(pressedKeys: Set<KeyCode>)
+}
+
+class Explosion {
+    -frameIndex: int
+    +Explosion(initialLocation: Coordinate2D, speed: double, direction: double)
+    +updateFrame()
+    +setupTimers()
+}
+
+interface ExplosionAdder {
+    +addExplosion(anchorLocation: Coordinate2D, speed: double, direction: double)
+}
+
+class ExplosionTimer {
+    -explosion: Explosion
+    +ExplosionTimer(explosion: Explosion)
+    +onAnimationUpdate(timestamp: long)
+}
+
+class GameLevel {
+    -bulletSpawner: BulletSpawner
+    -invaderSpawner: EntitySpawner
+    -scoreBoard: ScoreDisplay
+    -liveDisplay: LiveDisplay
+    -laserIndicator: LaserPowerUpIndicator
+    -lives: int
+    +GameLevel(speezinvaderz: Speezinvaderz)
+    +setupScene()
+    +setupEntities()
+    +setupEntitySpawners()
+    +addExplosion(anchorLocation: Coordinate2D, speed: double, direction: double)
+    +getScoreBoard(): ScoreDisplay
+    +loseLife()
+    +activateLaserPowerUp()
+}
+
+class GameOverScene {
+    +GameOverScene()
+    +setupScene()
+    +setupEntities()
+}
+
+class BulletSpawner {
+    -location: Coordinate2D
+    -explosionAdder: ExplosionAdder
+    -direction: double
+    -laserActive: boolean
+    +BulletSpawner(location: Coordinate2D, explosionAdder: ExplosionAdder)
+    +spawnEntities()
+    +setLocation(location: Coordinate2D)
+    +setDirection(direction: double)
+    +setLaserActive(laserActive: boolean)
+}
+
+class InvaderSpawner {
+    -speed: double
+    -explosionAdder: ExplosionAdder
+    -gameLevel: GameLevel
+    -game: Speezinvaderz
+    +InvaderSpawner(explosionAdder: ExplosionAdder, spawnInterval: long, speed: double, gameLevel: GameLevel, game: Speezinvaderz)
+    +spawnEntities()
+}
+
+class Speezinvaderz {
+    +main(args: String[])
+    +setupGame()
+    +setupScenes()
+}
+
+Bullet --|> DynamicSpriteEntity
+BulletTimer --|> Timer
+GameOverText --|> DynamicTextEntity
+Invader --|> DynamicSpriteEntity
+RareInvader --|> Invader
+StandardInvader --|> Invader
+LaserPowerUpIndicator --|> DynamicTextEntity
+LiveDisplay --|> DynamicTextEntity
+Player --|> DynamicSpriteEntity
+Explosion --|> DynamicSpriteEntity
+ExplosionTimer --|> Timer
+GameLevel --|> DynamicScene
+GameOverScene --|> DynamicScene
+BulletSpawner --|> EntitySpawner
+InvaderSpawner --|> EntitySpawner
+Speezinvaderz --|> YaegerGame
+
+Bullet ..> ExplosionAdder : uses
+BulletTimer ..> Bullet : uses
+Invader ..> ExplosionAdder : uses
+Invader ..> GameLevel : uses
+Invader ..> Speezinvaderz : uses
+Player ..> BulletSpawner : uses
+ExplosionTimer ..> Explosion : uses
+GameLevel ..> Speezinvaderz : uses
+GameLevel ..> ExplosionAdder : implements
+BulletSpawner ..> ExplosionAdder : uses
+InvaderSpawner ..> ExplosionAdder : uses
+InvaderSpawner ..> GameLevel : uses
+InvaderSpawner ..> Speezinvaderz : uses
+@enduml
